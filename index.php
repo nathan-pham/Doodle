@@ -11,7 +11,6 @@
 	<link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-	<!-- Doodle, adapted from Reece Kenney -->
 	<div class="wrapper index-page">
 		<main class="main-section">
       <div class="logo-container">
