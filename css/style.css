@@ -1,0 +1,146 @@
+.wrapper.index-page {
+	justify-content: center;
+}
+
+.main-section {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.main-section .search-container {
+	margin: 20px 0 0 0;
+	width: 100%;
+}
+.main-section .search-container form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.search-container .search-button {
+	color: #3c4043;
+	background: #f8f9fa;
+  border: 1px solid #f8f9fa;
+	outline: none;
+  user-select: none;
+	border-radius: 4px;
+	font-size: 14px;
+	margin: 20px 0 0 0;
+  padding: 0 16px;
+  line-height: 27px;
+  height: 36px;
+  min-width: 54px;
+  text-align: center;
+	cursor: pointer;
+}
+.search-container .search-button:hover {
+  border: 1px solid #dadce0;
+  box-shadow: 0 1px 1px rgb(0 0 0 / 10%);
+}
+
+.main-section .search-container .search-box {
+  border: 1px solid #dfe1e5;
+	outline: none;
+	height: 44px;
+	width: 70%;
+	padding: 12px 24px;
+	border-radius: 24px;
+	font-size: 16px;
+	max-width: 482px;
+	color: #000;
+}
+.main-section .search-container .search-box:hover {
+  box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
+  border-color: rgba(223, 225, 229, 0);
+}
+
+.main-section .logo-container {
+	width: 220px;
+	text-align: center;
+}
+.logo-container img {
+	width: 100%;
+}
+
+.header {
+  border-bottom: 1px solid #ebebeb;
+}
+
+.wrapper .header-content {
+  display: flex;
+  align-items: center;
+}
+.header-content .logo-container {
+  width: 150px;
+  padding: 5px 20px;
+}
+.header-content .search-container {
+  flex: 1;
+}
+.header-content .search-container form {
+  margin: 15px 0 28px 0;
+}
+.header-content .search-bar-container {
+  border-radius: 24px;
+  background: #fff;
+  height: 44px;
+  width: 70%;
+  max-width: 630px;
+  display: flex;
+  border: 1px solid #dfe1e5;
+  overflow: hidden;
+}
+.header-content .search-bar-container:hover {
+  box-shadow: 0 1px 6px rgb(32 33 36 / 28%);
+  border-color: rgba(223, 225, 229, 0);
+}
+.header-content .search-bar-container .search-box {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  padding: 12px;
+  padding-left: 24px;
+  font-size: 16px;
+  color: #000;
+}
+.header-content .search-bar-container button {
+  background: #fff;
+  border: none;
+  outline: none;
+  height: 44px;
+  width: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px 0 0;
+  margin: 0;
+}
+.header-content .search-bar-container button svg {
+  fill: #4285f4;
+  width: 24px;
+}
+
+.tabs-container {
+  margin: 0 0 0 150px;
+}
+.tabs-container .tab-list {
+  padding: 0;
+  margin: 0;
+}
+.tabs-container .tab-list li {
+  display: inline-block;
+  padding: 0 16px 12px 16px;
+  font-size: 13px;
+}
+.tabs-container .tab-list li a {
+  text-decoration: none;
+  color: #6e7176;
+}
+.tabs-container .tab-list li.active {
+  border-bottom: 3px solid #1a73e8;
+}
+.tabs-container .tab-list li.active a {
+  color: #1a73e8;
+}
