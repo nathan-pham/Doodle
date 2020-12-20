@@ -144,3 +144,35 @@
 .tabs-container .tab-list li.active a {
   color: #1a73e8;
 }
+
+.results-section {
+  flex: 1;
+  padding: 0 150px;
+}
+.results-section .results-count {
+  font-size: 13px;
+  color: #808080;
+}
+.result-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 26px 0;
+  line-height: 12.;
+}
+.result-container h3 {
+  margin: 0;
+}
+.result-container a {
+  text-decoration: none;
+  font-weight: normal;
+  color: #1a0dab;
+  font-size: 18px;
+}
+.result-container a:hover {
+  text-decoration: underline;
+}
+.result-container .url, 
+.result-container .description {
+  font-size: 14px;
+  color: #4d5156;
+}

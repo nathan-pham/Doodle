@@ -5,6 +5,8 @@ include('php/parser.php');
 $already_crawled = array();
 $crawling = array();
 
+$already_found_images = array();
+
 function link_exists($url) {
   global $con;
   $query = $con -> prepare("SELECT * FROM sites WHERE url = :url");
@@ -23,15 +25,40 @@ function insert_link($url, $title, $description, $keywords) {
   $query -> bindParam(':url', $url);  
   $query -> bindParam(':title', $title);  
   $query -> bindParam(':description', $description);  
-  $query -> bindParam(':keywords', $keywords);  
+  $query -> bindParam(':keywords', $keywords);
+
+  return $query -> execute();
+}
+
+function image_exists($url) {
+  global $con;
+  $query = $con -> prepare("SELECT * FROM images WHERE imageUrl = :url");
+
+  $query -> bindParam(':url', $url);  
+  $query -> execute();
+
+  return $query -> rowCount() !== 0;
+}
+
+function insert_image($url, $src, $alt, $title) {
+  global $con;
+  $query = $con -> prepare("INSERT INTO images(siteUrl, imageUrl, alt, title)
+                            VALUES(:siteUrl, :imageUrl, :alt, :title)");
+
+  $query -> bindParam(':siteUrl', $url);  
+  $query -> bindParam(':imageUrl', $src);  
+  $query -> bindParam(':alt', $alt);  
+  $query -> bindParam(':title', $title);
 
   return $query -> execute();
 }
 
 function get_details($url) {
+  global $already_found_images;
+
   $parser = new Parser($url);
 
-  $title_array = $parser -> get_title();
+  $title_array = $parser -> get('title');
 
   if(sizeof($title_array) == 0 || $title_array -> item(0) == NULL) {
     return;
@@ -47,7 +74,7 @@ function get_details($url) {
   $description = '';
   $keywords = '';
 
-  $meta_array = $parser -> get_meta();
+  $meta_array = $parser -> get('meta');
 
   foreach($meta_array as $meta) {
     if($meta -> getAttribute('name') == 'description') {
@@ -71,6 +98,36 @@ function get_details($url) {
     echo "ERROR: failed to insert $url";
   }
   echo "<br />";
+
+  $img_array = $parser -> get('img');
+  foreach($img_array as $img) {
+    $src = $img -> getAttribute('src');
+    $alt = $img -> getAttribute('alt');
+    $title = $img -> getAttribute('title');
+
+    if(!$title && !$alt) {
+      continue;
+    }
+
+    $src = create_link($src, $url);
+
+    if(!in_array($src, $already_found_images)) {
+      $already_found_images[] = $src;
+      
+      if(!image_exists($src)) {
+        if(insert_image($url, $src, $alt, $title)) {
+          echo "SUCCESS: $src inserted";
+        }
+        else {
+          echo "ERROR: failed to insert $src";
+        }
+      }
+      else {
+        echo "ERROR: $src already exists";
+      }
+      echo "<br />";
+    }
+  }
 }
 
 function create_link($src, $url) {
@@ -99,7 +156,7 @@ function crawl($url) {
 
   $parser = new Parser($url);
   
-  $links = $parser -> get_links();
+  $links = $parser -> get('a');
 
   foreach($links as $link) {
     $href = $link -> getAttribute('href');
@@ -115,9 +172,6 @@ function crawl($url) {
       $crawling[] = $href;
       get_details($href);
     }
-    else {
-      return;
-    }
   }
 
   array_shift($crawling);
@@ -127,7 +181,7 @@ function crawl($url) {
   }
 }
 
-$start_url = 'https://www.bbc.com';
+$start_url = 'https://repl.it';
 
 crawl($start_url);
 

@@ -1,5 +1,6 @@
 # Doodle
-A simple clone of Google built on top of PHP.
+Simple Google clone made with PHP
 
-## Installation
-You can clone this github repository and run it locally with XAMPP. 
+## Installation & Deploy
+Local: Clone the github repository into the `htdocs` folder supplied by XAMPP  
+Cloud: Edit `config.php` to a remote sql connection and deploy to a free hosting service  
