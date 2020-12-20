@@ -83,7 +83,11 @@ $page = isset($_GET["page"]) ? $_GET["page"] : 1;
             $current_page = 1;
           }
 
-          while($pages_left > 0) {
+          if($current_page + $pages_left > $num_pages + 1) {
+            $current_page = $num_pages + 1 - $pages_left;
+          }
+
+          while($pages_left > 0 && $current_page <= $num_pages) {
             if($current_page == $page) {
               echo "<div class='page-number-container'>
                       <img src='icons/logo/page_selected.png' alt='page' />

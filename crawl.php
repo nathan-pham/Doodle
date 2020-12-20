@@ -181,7 +181,7 @@ function crawl($url) {
   }
 }
 
-$start_url = 'https://repl.it';
+$start_url = 'https://www.cnn.com/';
 
 crawl($start_url);
 
