@@ -24,11 +24,10 @@ class ImageProvider {
     public function get_results_html($page, $size, $term) {
         $from_limit = ($page - 1) * $size;
 
-        $query = $this -> con -> prepare("SELECT *
-                                          FROM sites WHERE title LIKE :term
-                                          OR url LIKE :term
-                                          OR keywords LIKE :term
-                                          OR description LIKE :term
+        $query = $this -> con -> prepare("SELECT * FROM images 
+                                          WHERE (title LIKE :term
+                                          OR alt LIKE :term)
+                                          AND broken = 0
                                           ORDER BY clicks DESC
                                           LIMIT :from_limit, :page_size");
 
@@ -39,36 +38,33 @@ class ImageProvider {
         
         $query -> execute();
 
-        $results_html = "<div class='site-results'>";
+        $results_html = "<div class='image-results'>";
 
         while($row = $query -> fetch(PDO::FETCH_ASSOC)) {
             $id = $row['id'];
-            $url = $row['url'];
-            $title = $this -> trim_field($row['title'], 55);
-            $description = $this -> trim_field($row['description'], 230);
+            $imageUrl = $row['imageUrl'];
+            $siteUrl = $row['siteUrl'];
+            $title = $row['title'];
+            $alt = $row['alt'];
             
-            $url = rtrim($url, '/');
+            $host_url = parse_url($siteUrl);
+            $host_url = $host_url['host'];
             
-            $parsed_url = parse_url($url);
-            $to_replace = isset($parsed_url['path']) ? $parsed_url['host'] . $parsed_url['path'] : $parsed_url['host'];
-            $replaced = str_replace('/', ' › ', $to_replace);
-            $pretty_url = $parsed_url['scheme'] . '://' . $replaced;
-
-            $results_html .= "<div class='result-container'>
-                                <span class='url'>$pretty_url</span>
-                                <h3 class='title'>
-                                    <a href='$url' data-id='$id'>$title</a>
-                                </h3>
-                                <span class='description'>$description</span>
+            $display  = $title ? $title : $alt;
+            if(!$display) {
+                $display = $imageUrl;
+            }
+            
+            $results_html .= "<div class='grid-item'>
+                                <img src='$imageUrl' />
+                                <a href='$siteUrl' target='_blank'>
+                                    <h3>$display</h3>
+                                    <p class='link'>$host_url</p>
+                                </a>
                               </div>";
         }
 
         return $results_html . "</div>";
-    }
-
-    private function trim_field($string, $limit) {
-        $dots = strlen($string) > $limit ? '...' : '';
-        return substr($string, 0, $limit) . $dots;
     }
 }
 ?>

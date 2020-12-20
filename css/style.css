@@ -147,11 +147,14 @@
 
 .results-section {
   flex: 1;
+}
+.results-section .site-results {
   padding: 0 150px;
 }
 .results-section .results-count {
   font-size: 13px;
   color: #808080;
+  margin: 15px 0 10px 150px;
 }
 .result-container {
   display: flex;
@@ -183,6 +186,13 @@
   margin: 0 0 25px 0;
   user-select: none;
 }
+.pagination-container .no-page {
+  height: 37px;
+}
+
+.pagination-container.images {
+  display: none;
+}
 
 .page-buttons {
   display: flex;
@@ -208,3 +218,53 @@ a .page-number {
 a .page-number:hover {
   text-decoration: underline;
 }
+
+.results-section .image-results {
+  margin: 10px;
+}
+.image-results .grid-item {
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 6px;
+  /* max-width: 390px; */
+  max-width: 100%;
+  display: inline-block;
+}
+.image-results .grid-item.active {
+  background: #e8f0fe;
+  border: 1px solid #7aa9f7;
+}
+.grid-item img {
+  width: 100%;
+}
+.grid-item:hover img {
+  box-shadow: 0 0 10px 5px #d0d0d0;
+}
+.grid-item a {
+  text-decoration: none;
+  color: #575a5c;
+}
+.grid-item a h3 {
+  font-size: 14px;
+  margin: 4px 0 0 0;
+  font-weight: normal;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+.grid-item a p {
+  font-size: 11px;
+  margin: 4px 0 0 0;
+}
+.grid-item a:hover p {
+  text-decoration: underline;
+}
+/*
+<div class='grid-item'>
+                                <img src='$imageUrl' />
+                                <a href='$siteUrl' target='_blank'>
+                                    <p>$display</p>
+                                    <p class='link'>$host_url</p>
+                                </a>
+                              </div>
+*/
