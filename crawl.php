@@ -5,6 +5,16 @@ include('php/parser.php');
 $already_crawled = array();
 $crawling = array();
 
+function link_exists($url) {
+  global $con;
+  $query = $con -> prepare("SELECT * FROM sites WHERE url = :url");
+
+  $query -> bindParam(':url', $url);  
+  $query -> execute();
+
+  return $query -> rowCount() !== 0;
+}
+
 function insert_link($url, $title, $description, $keywords) {
   global $con;
   $query = $con -> prepare("INSERT INTO sites(url, title, description, keywords)
@@ -51,7 +61,16 @@ function get_details($url) {
   $description = str_replace('\n', '', $description);
   $keywords = str_replace('\n', '', $keywords);
 
-  insert_link($url, $title, $description, $keywords);
+  if(link_exists($url)) {
+    echo "ERROR: $url already exists";
+  }
+  else if(insert_link($url, $title, $description, $keywords)) {
+    echo "SUCCESS: $url inserted";
+  }
+  else {
+    echo "ERROR: failed to insert $url";
+  }
+  echo "<br />";
 }
 
 function create_link($src, $url) {
