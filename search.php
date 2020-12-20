@@ -1,6 +1,7 @@
 <?php
-include('config.php');
-include('php/results_provider.php');
+include 'config.php';
+include 'php/site_provider.php';
+include 'php/image_provider.php';
 
 if(isset($_GET['term'])) {
   $term = $_GET['term'];
@@ -18,7 +19,7 @@ $page = isset($_GET["page"]) ? $_GET["page"] : 1;
 <html lang="en">
 <head>
   <?php
-		include "php/components/seo.php";
+		include 'php/components/seo.php';
 		echo seo();
   ?>
   <script defer src="js/script.js"></script>
@@ -35,10 +36,11 @@ $page = isset($_GET["page"]) ? $_GET["page"] : 1;
         <div class="search-container">
           <form action="search.php" method="GET">
             <div class="search-bar-container">
+              <input type="hidden" name="type" value="<?php echo $type; ?>" />
             	<input class="search-box" type="text" name="term" autocomplete="off" spellcheck="off" value="<?php echo $term; ?>" />
               <button>
                 <?php
-                  include('php/components/search-icon.php');
+                  include 'php/components/search-icon.php';
                   echo search_icon();
                 ?>
               </button>
@@ -59,8 +61,14 @@ $page = isset($_GET["page"]) ? $_GET["page"] : 1;
     </header>
     <main class="results-section">
       <?php
-        $results_provider = new ResultsProvider($con);
-        $page_size = 20;
+        if($type == 'sites') {
+          $results_provider = new SiteProvider($con);
+          $page_size = 20;  
+        }
+        else {
+          $results_provider = new ImageProvider($con);
+          $page_size = 30;  
+        }
 
         $num_results = $results_provider -> get_num_results($term);
 
@@ -88,6 +96,8 @@ $page = isset($_GET["page"]) ? $_GET["page"] : 1;
             $current_page = $num_pages + 1 - $pages_left;
           }
 
+          // if($num_pages !== 0) {
+          // }
           while($pages_left > 0 && $current_page <= $num_pages) {
             if($current_page == $page) {
               echo "<div class='page-number-container'>
@@ -103,7 +113,7 @@ $page = isset($_GET["page"]) ? $_GET["page"] : 1;
                       </a>
                     </div>";
             }
-            
+              
             $current_page++;
             $pages_left--;
           }

@@ -1,5 +1,5 @@
 <?php
-class ResultsProvider {
+class SiteProvider {
     
     private $con;
 
@@ -57,7 +57,7 @@ class ResultsProvider {
             $results_html .= "<div class='result-container'>
                                 <span class='url'>$pretty_url</span>
                                 <h3 class='title'>
-                                    <a href='$url'>$title</a>
+                                    <a href='$url' data-id='$id'>$title</a>
                                 </h3>
                                 <span class='description'>$description</span>
                               </div>";

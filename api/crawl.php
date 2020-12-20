@@ -1,6 +1,6 @@
 <?php
-include('config.php');
-include('php/parser.php');
+include 'config.php';
+include 'php/parser.php';
 
 $already_crawled = array();
 $crawling = array();

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<?php
-		include "php/components/seo.php";
+		include 'php/components/seo.php';
 		echo seo();
 	?>
 </head>
