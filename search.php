@@ -20,7 +20,8 @@ $page = isset($_GET["page"]) ? $_GET["page"] : 1;
   <?php
 		include "php/components/seo.php";
 		echo seo();
-	?>
+  ?>
+  <script defer src="js/script.js"></script>
 </head>
 <body>
 	<div class="wrapper search-page">
