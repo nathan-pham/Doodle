@@ -59,12 +59,12 @@ $page = isset($_GET["page"]) ? $_GET["page"] : 1;
     <main class="results-section">
       <?php
         $results_provider = new ResultsProvider($con);
-        $page_limit = 20;
+        $page_size = 20;
 
         $num_results = $results_provider -> get_num_results($term);
 
         echo "<p class='results-count'>$num_results results found</p>";
-        echo $results_provider -> get_results_html($page, $page_limit, $term);
+        echo $results_provider -> get_results_html($page, $page_size, $term);
       ?>
     </main>
     <footer class="pagination-container">
@@ -74,10 +74,16 @@ $page = isset($_GET["page"]) ? $_GET["page"] : 1;
         </div>
 
         <?php
-          $current_page = 1;
-          $max_page = 10;
+          $pages_show = 10;
+          $num_pages = ceil($num_results / $page_size);
+          $pages_left = min($pages_show, $num_pages);
 
-          while($current_page <= $max_page) {
+          $current_page = $page - floor($pages_show / 2);
+          if($current_page < 1) {
+            $current_page = 1;
+          }
+
+          while($pages_left > 0) {
             if($current_page == $page) {
               echo "<div class='page-number-container'>
                       <img src='icons/logo/page_selected.png' alt='page' />
@@ -94,6 +100,7 @@ $page = isset($_GET["page"]) ? $_GET["page"] : 1;
             }
             
             $current_page++;
+            $pages_left--;
           }
         ?>
 
