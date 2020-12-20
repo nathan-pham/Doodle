@@ -176,3 +176,35 @@
   font-size: 14px;
   color: #4d5156;
 }
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 25px 0;
+  user-select: none;
+}
+
+.page-buttons {
+  display: flex;
+}
+.page-number-container img {
+  height: 37px;
+}
+.page-number-container,
+.page-number-container a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+}
+.page-number {
+  color: #000;
+  font-size: 13px;
+}
+
+a .page-number {
+  color: #4285f4;
+}
+a .page-number:hover {
+  text-decoration: underline;
+}

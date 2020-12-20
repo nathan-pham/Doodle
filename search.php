@@ -11,13 +11,16 @@ else {
 }
 
 $type = isset($_GET["type"]) ? $_GET["type"] : "sites";
+$page = isset($_GET["page"]) ? $_GET["page"] : 1;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Doodle</title>
-	<link rel="stylesheet" href="css/globals.css" />
-	<link rel="stylesheet" href="css/style.css" />
+  <?php
+		include "php/components/seo.php";
+		echo seo();
+	?>
 </head>
 <body>
 	<div class="wrapper search-page">
@@ -25,7 +28,7 @@ $type = isset($_GET["type"]) ? $_GET["type"] : "sites";
       <div class="header-content">
         <div class="logo-container">
           <a href="./">
-            <img src="doodle.png" alt="Doodle" />
+            <img src="icons/logo/doodle.png" alt="Doodle" />
           </a>
         </div>
         <div class="search-container">
@@ -45,10 +48,10 @@ $type = isset($_GET["type"]) ? $_GET["type"] : "sites";
       <div class="tabs-container">
         <ul class="tab-list">
           <li class="<?php echo $type == 'sites' ? 'active' : '' ?>">
-            <a href="<?php echo 'search.php?term=$term&type=sites'; ?>">Sites</a>
+            <a href='<?php echo "search.php?term=$term&type=sites"; ?>'>Sites</a>
           </li>
           <li class="<?php echo $type == 'images' ? 'active' : '' ?>">
-            <a href="<?php echo 'search.php?term=$term&type=images'; ?>">Images</a>
+            <a href='<?php echo "search.php?term=$term&type=images"; ?>'>Images</a>
           </li>
         </ul>
       </div>
@@ -56,13 +59,49 @@ $type = isset($_GET["type"]) ? $_GET["type"] : "sites";
     <main class="results-section">
       <?php
         $results_provider = new ResultsProvider($con);
+        $page_limit = 20;
+
         $num_results = $results_provider -> get_num_results($term);
 
         echo "<p class='results-count'>$num_results results found</p>";
-        echo $results_provider -> get_results_html(1, 20, $term);
-
+        echo $results_provider -> get_results_html($page, $page_limit, $term);
       ?>
     </main>
-	</div>
+    <footer class="pagination-container">
+      <div class="page-buttons">
+        <div class="page-number-container">
+          <img src="icons/logo/page_start.png" alt="D" />
+        </div>
+
+        <?php
+          $current_page = 1;
+          $max_page = 10;
+
+          while($current_page <= $max_page) {
+            if($current_page == $page) {
+              echo "<div class='page-number-container'>
+                      <img src='icons/logo/page_selected.png' alt='page' />
+                      <span class='page-number'>$current_page</span>
+                    </div>";  
+            }
+            else {
+              echo "<div class='page-number-container'>
+                      <a href='search.php?term=$term&type$type&page=$current_page'>
+                        <img src='icons/logo/page.png' alt='page' />
+                        <span class='page-number'>$current_page</span>
+                      </a>
+                    </div>";
+            }
+            
+            $current_page++;
+          }
+        ?>
+
+        <div class="page-number-container">
+          <img src="icons/logo/page_end.png" alt="dle" />
+        </div>  
+      </div>
+    </footer>
+  </div>
 </body>
 </html>
