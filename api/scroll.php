@@ -6,5 +6,5 @@ $results_provider = new ImageProvider($con);
 $page_size = 20;
 $num_results = $results_provider -> get_num_results($_POST['term']);
 
-echo $results_provider -> get_results_html($_POST['page'], $page_size, $term);
+echo $results_provider -> scroll_html($_POST['page'], $page_size, $_POST['term']);
 ?>

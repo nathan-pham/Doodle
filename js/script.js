@@ -1,7 +1,8 @@
 let urlParams = new URLSearchParams(window.location.search);
 let type = urlParams.get("type") || "sites";
+let term = urlParams.get("term");
 let clicked = [];
-let timer;
+let page = 1;
 
 function query(route, data) {
     let form = new FormData();
@@ -18,34 +19,38 @@ function query(route, data) {
 type == "sites" ? manageSites() : manageImages();
 
 function manageImages() {
-    const grid = new Masonry(".image-results", {
-        itemSelector: ".grid-item",
-        columnWidth: 390,
-        fitWidth: true,
-        initLayout: false
+    loadImages();
+    
+    const container = document.querySelector(".image-results");
+    window.addEventListener("scroll", async () => {
+        const {scrollHeight, scrollTop, clientHeight} = document.documentElement
+        if(scrollTop + clientHeight > scrollHeight - 5) {
+            const html = await query("api/scroll.php", {
+                page: page++,
+                term
+            }).then(res => res.text());
+    
+            if(html) {
+                container.innerHTML += html;
+                loadImages();
+            }
+        }
     })
+}
 
+function loadImages() {
     const images = document.querySelectorAll(".pseudo-image");
-    const parents = [];
+
     for(const pseudo of images) {
         const { src } = pseudo.dataset;
         const loader = new Image();
-        parents.push(pseudo.parentNode);
 
         loader.addEventListener("load", () => {
             const image = document.createElement("img");
             image.src = loader.src;
-            image.addEventListener("click", previewImage);
-            
+            pseudo.parentNode.style.opacity = 1;
             pseudo.replaceWith(image);
-
-            clearTimeout(timer);
-            timer = setTimeout(() => {
-                grid.layout();
-                parents.forEach((parent) => {
-                    parent.style.opacity = 1;
-                })
-            }, 500);
+            image.addEventListener("click", previewImage);
         })
 
         loader.addEventListener("error", () => {
