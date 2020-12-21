@@ -56,14 +56,14 @@ class ImageProvider {
             }
             
             $results_html .= "<div class='grid-item'>
-                                <img src='$imageUrl' />
+                                <div class='pseudo-image' data-src='$imageUrl'></div>
                                 <a href='$siteUrl' target='_blank'>
                                     <h3>$display</h3>
                                     <p class='link'>$host_url</p>
                                 </a>
                               </div>";
         }
-
+        
         return $results_html . "</div>";
     }
 }

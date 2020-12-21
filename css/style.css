@@ -226,9 +226,9 @@ a .page-number:hover {
   cursor: pointer;
   padding: 10px;
   border-radius: 6px;
-  /* max-width: 390px; */
-  max-width: 100%;
+  width: 390px;
   display: inline-block;
+  opacity: 0;
 }
 .image-results .grid-item.active {
   background: #e8f0fe;
@@ -236,6 +236,7 @@ a .page-number:hover {
 }
 .grid-item img {
   width: 100%;
+  margin: 0 auto;
 }
 .grid-item:hover img {
   box-shadow: 0 0 10px 5px #d0d0d0;
@@ -248,9 +249,12 @@ a .page-number:hover {
   font-size: 14px;
   margin: 4px 0 0 0;
   font-weight: normal;
+  max-width: 90%;
   white-space: nowrap;
   overflow-x: hidden;
   text-overflow: ellipsis;
+  max-width: 390px;
+  width: 80%;
 }
 .grid-item a p {
   font-size: 11px;

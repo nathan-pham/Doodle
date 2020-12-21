@@ -22,8 +22,6 @@ $page = isset($_GET["page"]) ? $_GET["page"] : 1;
 		include 'php/components/seo.php';
 		echo seo();
   ?>
-  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
-  <script defer src="js/script.js"></script>
 </head>
 <body>
 	<div class="wrapper search-page">
@@ -132,5 +130,7 @@ $page = isset($_GET["page"]) ? $_GET["page"] : 1;
       </div>
     </footer>
   </div>
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+  <script src="js/script.js"></script>
 </body>
 </html>
