@@ -16,15 +16,15 @@
         }
     }
     else if($type == 'images') {
-        if(isset($_POST['id'])) {
-            // $query = $con -> prepare("UPDATE sites SET clicks = clicks + 1 WHERE id = :id");
-            // $query -> bindParam(':id', $_POST['id']);
-            // $query -> execute();
+        if(isset($_POST['src'])) {
+            $query = $con -> prepare("UPDATE images SET broken = 1 WHERE imageUrl = :src");
+            $query -> bindParam(':src', $_POST['src']);
+            $query -> execute();
 
-            // echo "SUCCESS: updated link";    
+            echo "SUCCESS: updated image";    
         }
         else {
-            echo "ERROR: id not specified";
+            echo "ERROR: src not specified";
         }
     }
 ?>

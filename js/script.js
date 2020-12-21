@@ -50,8 +50,9 @@ function manageImages() {
         loader.addEventListener("error", () => {
             parent.remove();
             query("api/update.php", {
-                
-            })
+                type: "images",
+                src
+            });
         })
 
         loader.src = src;
@@ -86,7 +87,7 @@ function incrementClick(id, url, redirect) {
     query("api/update.php", {
         type: "sites",
         id
-    })
+    });
 
     if(redirect) {
         window.location.href = url;
