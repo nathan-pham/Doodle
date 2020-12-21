@@ -263,12 +263,71 @@ a .page-number:hover {
 .grid-item a:hover p {
   text-decoration: underline;
 }
-/*
-<div class='grid-item'>
-                                <img src='$imageUrl' />
-                                <a href='$siteUrl' target='_blank'>
-                                    <p>$display</p>
-                                    <p class='link'>$host_url</p>
-                                </a>
-                              </div>
-*/
+.preview {
+  background: rgba(0, 0, 0, 0.9);
+  position: fixed;
+  top: 0; bottom: 0; right: 0; left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+.preview .image-wrapper {
+  position: relative;
+  max-width: 500px;
+  will-change: transform;
+}
+.preview .image-wrapper img {
+  width: 100%;
+}
+.preview .image-wrapper button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.75);
+  border: none;
+  outline: none;
+  border-radius: 100%;
+  transition: transform 0.3s ease;
+}
+.preview .image-wrapper button:hover {
+  transform: scale(1.1);
+}
+.preview hr {
+  border: none;
+  height: 1px; 
+  width: 100%;
+  margin: 10px 0;
+  background: #27282b;
+}
+.preview h3, .preview p {
+  color: #fff;
+}
+.preview h3 {
+  font-weight: 500;  
+  margin: 0 0 10px 0;
+  font-size: 20px;
+  max-width: 500px;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+}
+.preview h3 a {
+  color: #fff;
+  text-decoration: none;
+}
+.preview h3 a:hover {
+  text-decoration: underline;
+}
+.preview p {
+  margin: 0;
+  font-size: 12px;
+  color: #9aa0a6;
+}

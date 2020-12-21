@@ -60,15 +60,8 @@ $page = isset($_GET["page"]) ? $_GET["page"] : 1;
     </header>
     <main class="results-section">
       <?php
-        if($type == 'sites') {
-          $results_provider = new SiteProvider($con);
-          $page_size = 20;
-        }
-        else {
-          $results_provider = new ImageProvider($con);
-          $page_size = 30;  
-        }
-        
+        $results_provider = $type == 'sites' ? new SiteProvider($con) : new ImageProvider($con);
+        $page_size = 20;
         $num_results = $results_provider -> get_num_results($term);
 
         if($type == 'sites') {
@@ -131,6 +124,9 @@ $page = isset($_GET["page"]) ? $_GET["page"] : 1;
     </footer>
   </div>
   <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+  <script>
+    const num_results = <?php echo $num_results; ?>;
+  </script>
   <script src="js/script.js"></script>
 </body>
 </html>

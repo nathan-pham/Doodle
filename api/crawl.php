@@ -1,6 +1,6 @@
 <?php
-include 'config.php';
-include 'php/parser.php';
+include '../config.php';
+include '../php/parser.php';
 
 $already_crawled = array();
 $crawling = array();
@@ -153,7 +153,7 @@ function create_link($src, $url) {
 function crawl($url) {
   global $already_crawled;
   global $crawling;
-
+  
   $parser = new Parser($url);
   
   $links = $parser -> get('a');
@@ -181,7 +181,7 @@ function crawl($url) {
   }
 }
 
-$start_url = 'https://www.cnn.com/';
+$start_url = isset($_GET['start']) ? $_GET['start'] : 'https://www.cnn.com';
 
 crawl($start_url);
 

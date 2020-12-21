@@ -1,5 +1,5 @@
 let urlParams = new URLSearchParams(window.location.search);
-let type = urlParams.get("type");
+let type = urlParams.get("type") || "sites";
 let clicked = [];
 let timer;
 
@@ -35,10 +35,11 @@ function manageImages() {
         loader.addEventListener("load", () => {
             const image = document.createElement("img");
             image.src = loader.src;
+            image.addEventListener("click", previewImage);
+            
             pseudo.replaceWith(image);
 
             clearTimeout(timer);
-            
             timer = setTimeout(() => {
                 grid.layout();
                 parents.forEach((parent) => {
@@ -57,6 +58,43 @@ function manageImages() {
 
         loader.src = src;
     }
+}
+
+function previewImage(e) {
+    const parent = e.target.parentNode;
+    const a = parent.querySelector("a");
+
+    for(const active of document.querySelectorAll(".active")) {
+        active.classList.remove("active");
+    }
+
+    parent.classList.add("active");
+
+
+
+    const preview = document.createElement("div");
+    preview.className = "preview";
+    preview.innerHTML = `
+        <div class="preview-content">
+            <div class="image-wrapper">
+                <img src="${e.target.src}" />
+                <button>✕</button>
+            </div>
+            <hr />
+            <h3>
+                <a href="${a.href}">${a.querySelector("h3").textContent}</a>
+            </h3>
+            <p>Image may be subject to copyright.</p>
+            </div>
+        </div> 
+    `;
+
+    preview.querySelector("button").addEventListener("click", () => {
+        preview.remove();
+        parent.classList.remove("active");
+    })
+
+    document.body.appendChild(preview);
 }
 
 function manageSites() {
