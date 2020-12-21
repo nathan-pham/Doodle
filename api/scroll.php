@@ -2,16 +2,9 @@
 include '../config.php';
 include '../php/image_provider.php';
 
-// $type = isset($_POST['type']) ? $_POST['type'] : 'sites';
+$results_provider = new ImageProvider($con);
+$page_size = 20;
+$num_results = $results_provider -> get_num_results($_POST['term']);
 
-    // if(isset($_POST['id'])) {
-    //     $query = $con -> prepare("UPDATE sites SET clicks = clicks + 1 WHERE id = :id");
-    //     $query -> bindParam(':id', $_POST['id']);
-    //     $query -> execute();
-
-    //     echo "SUCCESS: updated link";    
-    // }
-    // else {
-    //     echo "ERROR: id not specified";
-    // }
+echo $results_provider -> get_results_html($_POST['page'], $page_size, $term);
 ?>

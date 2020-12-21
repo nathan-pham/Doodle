@@ -17,7 +17,7 @@ if($type == 'sites') {
 }
 else if($type == 'images') {
     if(isset($_POST['src'])) {
-        $query = $con -> prepare("UPDATE images SET broken = 1 WHERE imageUrl = :src");
+        $query = $con -> prepare("UPDATE images SET clicks = clicks + 1 WHERE imageUrl = :src");
         $query -> bindParam(':src', $_POST['src']);
         $query -> execute();
 

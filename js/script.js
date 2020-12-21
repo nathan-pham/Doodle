@@ -50,8 +50,7 @@ function manageImages() {
 
         loader.addEventListener("error", () => {
             parent.remove();
-            query("api/update.php", {
-                type: "images",
+            query("api/broken.php", {
                 src
             });
         })
@@ -70,8 +69,6 @@ function previewImage(e) {
 
     parent.classList.add("active");
 
-
-
     const preview = document.createElement("div");
     preview.className = "preview";
     preview.innerHTML = `
@@ -82,7 +79,7 @@ function previewImage(e) {
             </div>
             <hr />
             <h3>
-                <a href="${a.href}">${a.querySelector("h3").textContent}</a>
+                <a href="${a.href}" target="_blank">${a.querySelector("h3").textContent}</a>
             </h3>
             <p>Image may be subject to copyright.</p>
             </div>
@@ -95,6 +92,14 @@ function previewImage(e) {
     })
 
     document.body.appendChild(preview);
+    incrementImageClick(e.target.src);
+}
+
+function incrementImageClick(src) {
+    query("api/update.php", {
+        type: "images",
+        src
+    });
 }
 
 function manageSites() {
@@ -114,14 +119,14 @@ function manageSites() {
             }
             clicked.push(id);
 
-            id ? incrementClick(id, url, redirect) : console.log("ERROR: data-id not found");
+            id ? incrementSiteClick(id, url, redirect) : console.log("ERROR: data-id not found");
             
             return false;
         })
     }
 }
 
-function incrementClick(id, url, redirect) {
+function incrementSiteClick(id, url, redirect) {
     query("api/update.php", {
         type: "sites",
         id
