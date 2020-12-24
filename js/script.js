@@ -68,7 +68,7 @@ function previewImage(e) {
     const parent = e.target.parentNode;
     const a = parent.querySelector("a");
 
-    for(const active of document.querySelectorAll(".active")) {
+    for(const active of document.querySelectorAll(".grid-item.active")) {
         active.classList.remove("active");
     }
 
