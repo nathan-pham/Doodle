@@ -140,7 +140,7 @@ function create_link($src, $url) {
   else if(substr($src, 0, 1) == '/') {
     $src = $scheme . '://' . $host . $src;
   }
-  else if(substr($src, 0, 1) == './') {
+  else if(substr($src, 0, 2) == './') {
     $src = $scheme . '://' . $host . dirname(parse_url($url)['path']).substr($src, 1);
   }
   else if(substr($src, 0, 3) == '../' || substr($src, 0, 4) !== 'http') {
